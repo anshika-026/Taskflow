@@ -25,7 +25,6 @@ priority levels, due dates, and persistent storage.
 ## 📦 Installation & Setup
 
 ### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - Visual Studio 2022 or VS Code
 
 ### Run the App
