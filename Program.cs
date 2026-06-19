@@ -26,9 +26,15 @@ while (true)
         case "5":
             ViewByPriority();
             break;
-        case "Q":
-            Console.WriteLine("\n  Goodbye! 👋");
-            return;
+        case "6":
+            EditTask();
+            break;
+        case "7":
+            SearchTasks();
+            break;
+        case "8":
+            FilterAndSort();
+            break;
         default:
             Display.Error("Invalid option. Please try again.");
             Display.Pause();
@@ -156,5 +162,96 @@ void ViewByPriority()
     Display.TaskList(medium, "🟡 Medium Priority");
     Display.TaskList(low,    "🟢 Low Priority");
 
+    Display.Pause();
+}
+
+void EditTask()
+{
+    Display.Header();
+    var todos = repo.GetAll();
+    Display.TaskList(todos);
+
+    Console.Write("  Enter task ID to edit: ");
+    if (!int.TryParse(Console.ReadLine(), out int id))
+    {
+        Display.Error("Invalid ID.");
+        Display.Pause();
+        return;
+    }
+
+    var task = repo.GetById(id);
+    if (task == null)
+    {
+        Display.Error("Task not found.");
+        Display.Pause();
+        return;
+    }
+
+    Console.Write($"  New title (current: {task.Title}): ");
+    var title = Console.ReadLine()?.Trim();
+    if (string.IsNullOrEmpty(title)) title = task.Title;
+
+    Console.Write($"  New description (current: {task.Description}): ");
+    var desc = Console.ReadLine()?.Trim() ?? task.Description;
+
+    Console.WriteLine("\n  Priority: [1] Low  [2] Medium  [3] High");
+    Console.Write("  Choose: ");
+    var p = Console.ReadLine()?.Trim();
+    var priority = p switch { "1" => Priority.Low, "3" => Priority.High, _ => Priority.Medium };
+
+    Console.Write($"  New due date (current: {task.DueDateDisplay}): ");
+    var dateInput = Console.ReadLine()?.Trim();
+    DateTime? dueDate = task.DueDate;
+    if (!string.IsNullOrEmpty(dateInput) && DateTime.TryParse(dateInput, out var parsed))
+        dueDate = parsed;
+
+    repo.Edit(id, title, desc, priority, dueDate);
+    Display.Success("Task updated!");
+    Display.Pause();
+}
+
+void SearchTasks()
+{
+    Display.Header();
+    Console.Write("  Enter keyword to search: ");
+    var keyword = Console.ReadLine()?.Trim() ?? "";
+    var results = repo.Search(keyword);
+    Display.TaskList(results, $"Search results for \"{keyword}\"");
+    Display.Pause();
+}
+
+void FilterAndSort()
+{
+    Display.Header();
+    Console.WriteLine("  ── Filter & Sort ──\n");
+    Console.WriteLine("  [1] Show completed tasks");
+    Console.WriteLine("  [2] Show pending tasks");
+    Console.WriteLine("  [3] Sort by due date");
+    Console.WriteLine("  [4] Sort by priority");
+    Console.Write("\n  Choose: ");
+
+    var choice = Console.ReadLine()?.Trim();
+
+    var todos = repo.GetAll();
+
+    var result = choice switch
+    {
+        "1" => todos.Where(t => t.IsCompleted).ToList(),
+        "2" => todos.Where(t => !t.IsCompleted).ToList(),
+        "3" => todos.OrderBy(t => t.DueDate ?? DateTime.MaxValue).ToList(),
+        "4" => todos.OrderBy(t => t.Priority).ToList(),
+        _ => todos
+    };
+
+    var title = choice switch
+    {
+        "1" => "Completed Tasks",
+        "2" => "Pending Tasks",
+        "3" => "Sorted by Due Date",
+        "4" => "Sorted by Priority",
+        _ => "All Tasks"
+    };
+
+    Display.TaskList(result, title);
     Display.Pause();
 }

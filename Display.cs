@@ -23,6 +23,9 @@ public static class Display
         Console.WriteLine("  [3] Mark task complete/incomplete");
         Console.WriteLine("  [4] Delete a task");
         Console.WriteLine("  [5] View by priority");
+        Console.WriteLine("  [6] Edit a task");
+        Console.WriteLine("  [7] Search tasks");
+        Console.WriteLine("  [8] Filter & sort tasks");
         Console.WriteLine("  [Q] Quit");
         Console.ForegroundColor = ConsoleColor.DarkGray;
         Console.WriteLine("─────────────────────────────────");

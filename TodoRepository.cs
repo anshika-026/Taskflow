@@ -49,22 +49,73 @@ public class TodoRepository
 
     private void Save()
     {
-        var json = JsonSerializer.Serialize(_todos, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(_filePath, json);
+        try
+        {
+            var json = JsonSerializer.Serialize(_todos,
+                new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(_filePath, json);
+        }
+        catch (IOException ex)
+        {
+            LogError($"Failed to save tasks: {ex.Message}");
+            Console.WriteLine("  Warning: Could not save tasks to file.");
+        }
     }
 
     private void Load()
     {
-        if (!File.Exists(_filePath)) return;
+        if (!File.Exists(_filePath))
+        {
+            _todos = new();
+            return;
+        }
         try
         {
             var json = File.ReadAllText(_filePath);
             _todos = JsonSerializer.Deserialize<List<TodoItem>>(json) ?? new();
             _nextId = _todos.Count > 0 ? _todos.Max(t => t.Id) + 1 : 1;
         }
+        catch (JsonException ex)
+        {
+            LogError($"Failed to read tasks file: {ex.Message}");
+            File.Copy(_filePath, _filePath + ".backup", overwrite: true);
+            _todos = new();
+        }
+        catch (IOException ex)
+        {
+            LogError($"File access error: {ex.Message}");
+            _todos = new();
+        }
+    }
+    public bool Edit(int id, string newTitle, string newDescription, Priority newPriority, DateTime? newDueDate)
+    {
+        var item = GetById(id);
+        if (item == null) return false;
+        item.Title = newTitle;
+        item.Description = newDescription;
+        item.Priority = newPriority;
+        item.DueDate = newDueDate;
+        Save();
+        return true;
+    }
+
+    public List<TodoItem> Search(string keyword)
+    {
+        return _todos.Where(t =>
+            t.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+            t.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void LogError(string message)
+    {
+        try
+        {
+            File.AppendAllText("error.log", $"{DateTime.Now}: {message}{Environment.NewLine}");
+        }
         catch
         {
-            _todos = new();
+            // If logging fails, we silently ignore it to avoid crashing the app.
         }
     }
 }
