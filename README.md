@@ -26,6 +26,14 @@ priority levels, due dates, and persistent storage.
 
 ### Prerequisites
 - Visual Studio 2022 or VS Code
+  
+
+## 🖥️ API Screenshot
+
+
+
+![Swagger UI](swagger.png)
+
 
 ### Run the App
 ```bash
@@ -34,9 +42,5 @@ cd Taskflow
 dotnet run
 
 
-## 🖥️ API Screenshot
 
-
-
-![Swagger UI](swagger.png)
 
