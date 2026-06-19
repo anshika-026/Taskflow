@@ -32,7 +32,7 @@ priority levels, due dates, and persistent storage.
 
 
 
-![Swagger UI](swagger.png)
+![Swagger UI](swagger.png.png)
 
 
 ### Run the App
