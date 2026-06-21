@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "Title": "My first API task",
+    "Description": "Testing TaskFlow API",
+    "IsCompleted": false,
+    "Priority": 1,
+    "DueDate": "2026-07-01T00:00:00Z",
+    "CreatedAt": "2026-06-19T13:16:46.8826213+05:30"
+  },
+  {
+    "Id": 2,
+    "Title": "My first API task",
+    "Description": "Testing TaskFlow API",
+    "IsCompleted": false,
+    "Priority": 1,
+    "DueDate": "2026-07-01T00:00:00Z",
+    "CreatedAt": "2026-06-19T13:16:48.8074934+05:30"
+  },
+  {
+    "Id": 3,
+    "Title": "My first API task",
+    "Description": "Testing TaskFlow API",
+    "IsCompleted": false,
+    "Priority": 1,
+    "DueDate": "2026-07-01T00:00:00Z",
+    "CreatedAt": "2026-06-19T13:16:53.7373112+05:30"
+  },
+  {
+    "Id": 4,
+    "Title": "My first API task",
+    "Description": "Testing TaskFlow API",
+    "IsCompleted": false,
+    "Priority": 1,
+    "DueDate": "2026-07-01T00:00:00Z",
+    "CreatedAt": "2026-06-19T13:16:54.9953533+05:30"
+  }
+]
