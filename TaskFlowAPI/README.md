@@ -73,7 +73,10 @@ This project demonstrates:
 ![Swagger UI](swagger.png.png)
 
 ### Example: POST request creating a task
-![POST Task Example](POST request.png.png)
+
+![POST Task Example](POST%20request.png.png)
+![POST Task Example](executing.png.png)
+
 
 
 > Replace the image files above with your own screenshots — save them in the repo root (or an `/images` folder and update the paths) so they display correctly on GitHub.
