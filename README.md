@@ -118,9 +118,6 @@ This project demonstrates:
 
 ---
 
-## 👩‍💻 Author
 
-**Anshika Yadav**
-B.Tech CSE Student, Shri Ram Murti Smarak College, Bareilly
 - GitHub: [@anshika-026](https://github.com/anshika-026)
 - LinkedIn: [Anshika Yadav](https://linkedin.com/in/anshika-yadav-24b5a9358)
